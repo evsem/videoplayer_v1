@@ -36,3 +36,30 @@ function stopVideo() {
   video.pause()
 }
 stopBtn.addEventListener('click', stopVideo)
+
+//Время видео(Timer)
+function progressAndTimerVideo() {
+  //Получаем текущее время на прогрессбаре
+  progress.value = (video.currentTime / video.duration) * 100
+
+  //Получаем текущие минуты данного видео
+  let minutes = Math.floor(video.currentTime / 60)
+  if (minutes < 10) {
+    minutes = '0' + String(minutes)
+  }
+  //Получаем текущие секунды данного видео
+  let seconds = Math.floor(video.currentTime % 60)
+  if (seconds < 10) {
+    seconds = '0' + String(seconds)
+  }
+
+  //
+  time.innerHTML = `${minutes}:${seconds}`
+}
+video.addEventListener('timeupdate', progressAndTimerVideo)
+
+//Выбрать положение progress
+let setProgress = () => {
+  video.currentTime = (progress.value * video.duration) / 100
+}
+progress.addEventListener('change', setProgress)
